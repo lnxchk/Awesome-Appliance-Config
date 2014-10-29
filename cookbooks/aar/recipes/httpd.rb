@@ -1,5 +1,5 @@
 httpd_service 'aar' do
-  modules 'mod_wsgi'
+  modules ['mod_wsgi']
   action :create
 end
 
