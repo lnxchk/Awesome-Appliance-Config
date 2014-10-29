@@ -11,3 +11,4 @@ directory node['aar']['document_root'] do
   recursive true
 end
 
+include_recipe 'aar::httpd'
