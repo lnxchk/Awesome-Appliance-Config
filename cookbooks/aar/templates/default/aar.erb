@@ -1,20 +1,18 @@
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
 
-  DocumentRoot <%= node['aar']['document_root'] %>
-
-  <Directory />
-     Options FollowSymLinks
-     AllowOverride None
-  </Directory>
+#  DocumentRoot <%= node['aar']['document_root'] %>
+  ServerName /
+  WSGIDaemonProcess /AAR user=<%= node['aar']['system_user'] %> group=<%= node['aar']['system_group'] %> threads=<%= node['aar']['num_threads'] %>
+  WSGIProcessGroup /AAR
 
   <Directory <%= node['aar']['document_root'] %>/>
-     Options Indexes FollowSymLinks MultiViews
-     AllowOverride None
-     Order allow,deny
-     allow from all
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIScriptReloading on
+    Order deny,allow
+    Allow from all
   </Directory>
-
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
   LogLevel warn
 </VirtualHost>
 
