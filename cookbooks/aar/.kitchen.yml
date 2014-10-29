@@ -12,5 +12,6 @@ suites:
   - name: default
     run_list:
       - recipe[mysql::server]
+      - recipe[python::default]
       - recipe[aar::default]
     attributes:
