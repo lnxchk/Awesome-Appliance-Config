@@ -3,3 +3,4 @@
 #
 python_pip 'flask'
 
+package 'MySQL-python'
