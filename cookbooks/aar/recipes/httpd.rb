@@ -2,7 +2,7 @@ httpd_service 'aar' do
   action :create
 end
 
-httpd_module 'mod_wsgi' do
+httpd_module 'wsgi' do
   instance 'aar'
   notifies :restart, 'httpd_service[aar]'
 end
