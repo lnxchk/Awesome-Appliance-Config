@@ -6,14 +6,14 @@ mysql_connection_info = {
   :password => node['mysql']['server_root_password']
 }
 
-cookbook_file "#{ node['chef_client']['cache_path'] }/make_AARdb.sql" do
+cookbook_file "#{ Chef::Config[:file_cache_path] }/make_AARdb.sql" do
   source "make_AARdb.sql"
 end
 
 
 mysql_database 'run script' do
   connection mysql_connection_info
-  sql { ::File.open("#{ node['chef-client']['cache_path'] }/make_AARdb.sql").read }
+  sql { ::File.open("#{ Chef::Config[:file_cache_path] }/make_AARdb.sql").read }
   action :query
   notifies :create, "ruby_block[db_is_ready]", :immediately
   not_if { node.attribute?('aar.db_is_ready') }
