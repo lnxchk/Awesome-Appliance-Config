@@ -1,7 +1,7 @@
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
 
-#  DocumentRoot <%= node['aar']['document_root'] %>
+  DocumentRoot <%= node['aar']['document_root'] %>
   ServerName /
   WSGIDaemonProcess /AAR user=<%= node['aar']['system_user'] %> group=<%= node['aar']['system_group'] %> threads=<%= node['aar']['num_threads'] %>
   WSGIProcessGroup /AAR
