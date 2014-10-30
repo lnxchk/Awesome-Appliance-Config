@@ -13,3 +13,4 @@ end
 
 include_recipe 'aar::httpd'
 include_recipe 'aar::aar'
+include_recipe 'aar::db'
