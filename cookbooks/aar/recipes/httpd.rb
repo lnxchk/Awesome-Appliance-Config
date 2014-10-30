@@ -7,5 +7,5 @@ end
 
 httpd_service 'aar' do
   action :create
-  modules ["wsgi"]
+  modules ["wsgi", "log_config"]
 end
