@@ -17,3 +17,15 @@ template "/var/www/AAR/AAR_config.py" do
   mode 0600
 end
 
+# install the pages
+cookbook_file "#{ Chef::Config[:file_cache_path] }/aar_pages.tar" do
+  source "aar_pages.tar"
+end
+
+bash "deploy_pages" do
+  cwd "/var/www/"
+  code <<-EOH
+    tar xf #{ Chef::Config[:file_cache_path] }/aar_pages.tar
+  EOH
+  not_if { ::File.exists?("/var/www/AAR/awesomeapp.py") }
+end
