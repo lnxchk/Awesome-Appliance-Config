@@ -20,12 +20,13 @@ mysql_database "AARdb" do
 end
 
 # create the AARdb schema
-mysql_database 'AARdb' do
-  not_if { node.attribute?('aar_db_is_ready') }
+mysql_database 'do_the_thing' do
+  database_name "AARdb"
   connection mysql_connection_info
   sql { ::File.open(sql_file).read }
   action :query
   notifies :create, "ruby_block[db_is_ready]", :immediately
+  not_if { node.attribute?('aar_db_is_ready') }
 end
 
 ruby_block "db_is_ready" do
