@@ -12,5 +12,6 @@ directory node['aar']['document_root'] do
 end
 
 include_recipe 'aar::httpd'
+include_recipe 'aar::python'
 include_recipe 'aar::aar'
 include_recipe 'aar::db'
