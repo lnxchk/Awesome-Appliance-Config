@@ -11,25 +11,21 @@ mysql_connection_info = {
 sql_file = "#{ Chef::Config[:file_cache_path] }/make_AARdb.sql"
 
 cookbook_file sql_file do
-    source "make_AARdb.sql"
+  source "make_AARdb.sql"
 end
 
 mysql_database "AARdb" do
-    connection  mysql_connection_info
-      action :create
+  connection  mysql_connection_info
+  action :create
 end
 
-# create the db if it doesn't exist
+# create the AARdb schema
 mysql_database 'AARdb' do
-  connection(
-    :host     => 'localhost',
-    :username => 'root',
-    :password => node['mysql']['server_root_password']
-  )
+  not_if { node.attribute?('aar_db_is_ready') }
+  connection mysql_connection_info
   sql { ::File.open(sql_file).read }
   action :query
   notifies :create, "ruby_block[db_is_ready]", :immediately
-  not_if { node.attribute?('aar_db_is_ready') }
 end
 
 ruby_block "db_is_ready" do
