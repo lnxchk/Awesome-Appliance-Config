@@ -18,14 +18,12 @@ template "/var/www/AAR/AAR_config.py" do
 end
 
 # install the pages
-cookbook_file "#{ Chef::Config[:file_cache_path] }/aar_pages.tar" do
+cookbook_file "#{ Chef::Config[:file_cache_path] }/aar_pages-1.0-1.x86_64.rpm" do
   source "aar_pages.tar"
 end
 
-bash "deploy_pages" do
-  cwd "/var/www/"
-  code <<-EOH
-    tar xf #{ Chef::Config[:file_cache_path] }/aar_pages.tar
-  EOH
-  not_if { ::File.exists?("/var/www/AAR/awesomeapp.py") }
+package "aar_pages" do
+  source "#{ Chef::Config[:file_cache_path] }/aar_pages-1.0-1.x86_64.rpm" 
+  provider Chef::Provider::Package::Rpm
 end
+
