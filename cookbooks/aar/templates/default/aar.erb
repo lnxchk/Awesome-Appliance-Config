@@ -5,6 +5,7 @@
   ServerName /
   WSGIDaemonProcess /AAR user=<%= node['aar']['system_user'] %> group=<%= node['aar']['system_group'] %> threads=<%= node['aar']['num_threads'] %>
   WSGIProcessGroup /AAR
+  WSGIScriptAlias / /var/www/AAR/awesomeapp.wsgi
 
   <Directory <%= node['aar']['document_root'] %>/>
     WSGIApplicationGroup %{GLOBAL}
