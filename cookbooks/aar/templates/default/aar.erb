@@ -14,7 +14,7 @@
     Allow from all
   </Directory>
   LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined
-  CustomLog /etc/httpd-aar/logs/access.log combined
+  CustomLog <%= node['aar']['log_dir'] %>/aar_log combined
   LogLevel warn
 </VirtualHost>
 

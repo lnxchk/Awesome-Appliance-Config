@@ -11,7 +11,19 @@ directory node['aar']['document_root'] do
   recursive true
 end
 
-include_recipe 'aar::httpd'
-include_recipe 'aar::python'
-include_recipe 'aar::aar'
+# database skeleton
 include_recipe 'aar::db'
+# python requirements and flask
+include_recipe 'aar::python'
+
+# webserver skeleton
+case node['platform_family']
+when 'rhel'
+  include_recipe 'aar::httpd'
+when 'debian'
+  include_recipe 'aar::apache2'
+end
+
+# aar code
+include_recipe 'aar::aar'
+

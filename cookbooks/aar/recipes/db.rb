@@ -38,9 +38,17 @@ ruby_block "db_is_ready" do
 end
 
 # add the app's db user
-mysql_database 'add user' do
+mysql_database_user 'aarapp' do
+  database_name "AARdb"
   connection mysql_connection_info
-  sql 'CREATE USER "aarapp"@"localhost" IDENTIFIED BY #{node["aar"]["db_passwd"]} ; GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost'
+  password node['aar']['db_passwd']
+  action :create
+end
+
+mysql_database 'grants' do
+  database_name "AARdb"
+  connection mysql_connection_info
+  sql 'GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost'
   action :query
 end
 
