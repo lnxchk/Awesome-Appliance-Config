@@ -18,27 +18,17 @@ template "/var/www/AAR/AAR_config.py" do
 end
 
 # install the pages
-case node['platform_family']
-when 'rhel'
-  cookbook_file "#{ Chef::Config[:file_cache_path] }/aar_pages-1.0-1.x86_64.rpm" do
-    source "aar_pages-1.0-1.x86_64.rpm"
-  end
+ark 'Awesome-Appliance-Repair' do 
+  url 'https://github.com/colincam/Awesome-Appliance-Repair/archive/master.zip'
+  path '/var/tmp'
+  owner node['aar']['system_user']
+  group node['aar']['system_group']
+  action :put
+end
 
-  package "aar_pages" do
-    source "#{ Chef::Config[:file_cache_path] }/aar_pages-1.0-1.x86_64.rpm" 
-    provider Chef::Provider::Package::Rpm
-  end
-when 'debian'
-  cookbook_file "#{ Chef::Config[:file_cache_path] }/aar_pages_1.0_amd64.deb" do
-    source "aar_pages_1.0_amd64.deb"
-  end
-
-  bash "install_the_thing" do
-    cwd Chef::Config[:file_cache_path]
-    code <<-EOH
-      dpkg -i aar_pages_1.0_amd64.deb 
-    EOH
-    not_if { ::File.exists?("/var/www/AAR/robots.txt") }
-  end
+execute "move AAR into place" do
+  command "mv /var/tmp/Awesome-Appliance-Repair/AAR /var/www"
+  only_if { ::File.directory?('/var/tmp/Awesome-Appliance-Repair/AAR') } 
+  not_if { ::File.exists?('/var/www/AAR/robots.txt') }
 end
 
