@@ -42,13 +42,8 @@ mysql_database_user 'aarapp' do
   database_name "AARdb"
   connection mysql_connection_info
   password node['aar']['db_passwd']
-  action :create
+  privileges [:create, :insert, :delete, :update, :select]
+  action [:create, :grant]
 end
 
-mysql_database 'grants' do
-  database_name "AARdb"
-  connection mysql_connection_info
-  sql 'GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost'
-  action :query
-end
 
