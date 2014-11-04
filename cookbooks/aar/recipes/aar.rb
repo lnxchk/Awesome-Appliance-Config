@@ -18,6 +18,8 @@ template "/var/www/AAR/AAR_config.py" do
 end
 
 # install the pages
+package 'unzip'
+
 ark 'Awesome-Appliance-Repair' do 
   url 'https://github.com/colincam/Awesome-Appliance-Repair/archive/master.zip'
   path '/var/tmp'
