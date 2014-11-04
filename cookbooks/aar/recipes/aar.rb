@@ -1,6 +1,8 @@
 # the AAR app code and config
 #
 # /var/www/AAR/AAR_config.py
+#
+include_recipe 'ark::default'
 
 require 'securerandom'
 node.set_unless['aar']['db_passwd'] = SecureRandom.urlsafe_base64(6)
@@ -19,7 +21,6 @@ end
 
 # install the pages
 package 'unzip'
-
 ark 'Awesome-Appliance-Repair' do 
   url 'https://github.com/colincam/Awesome-Appliance-Repair/archive/master.zip'
   path '/var/tmp'
