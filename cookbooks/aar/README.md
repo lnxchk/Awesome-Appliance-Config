@@ -1,4 +1,7 @@
 # aar
 
-TODO: Enter the cookbook description here.
+Awesome Appliance Config set up
+
+To support Awesome Appliance Repair
+
 
